@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class MainClass {
     public static void main(String[] args) {
+        IProductService prodServ = new ProductService();
         Scanner sc = new Scanner(System.in);
         System.out.println("Nhap ten SP:");
         String name = sc.nextLine();

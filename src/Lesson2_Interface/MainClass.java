@@ -8,7 +8,26 @@ public class MainClass {
 //        c.keu();
 //        c.diChuyen();
 
-        Animal tc = new ChimSau();
-        ((ThuCung) tc).cachNuoi();
+//        Animal tc = new ChimSau();
+//        ((ThuCung) tc).cachNuoi();
+
+        Animal c = new Cat();
+        Animal d = new Dog();
+        MainClass.nuoi(c);
+        MainClass.nuoi(d);
     }
+
+    public static void nuoi(Animal c)
+    {
+        c.an();
+        c.keu();
+        c.diChuyen();
+    }
+    
+//    public static void nuoiDog(Dog c)
+//    {
+//        c.an();
+//        c.keu();
+//        c.diChuyen();
+//    }
 }
