@@ -1,7 +1,6 @@
 package Lesson2_Lab1;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class ProductService implements IProductService {
     private ArrayList<Product> dssp = new ArrayList<>();
