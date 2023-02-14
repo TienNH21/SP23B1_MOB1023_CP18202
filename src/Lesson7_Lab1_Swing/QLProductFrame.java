@@ -8,10 +8,12 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class QLProductFrame extends javax.swing.JFrame {
+public class QLProductFrame extends javax.swing.JFrame
+    implements Runnable {
     private ProductService prodService = new ProductService();
     private String filename = "products.txt";
 
@@ -26,6 +28,35 @@ public class QLProductFrame extends javax.swing.JFrame {
         this.prodService.insert(p2);
         
         this.loadTable();
+        
+        Thread t = new Thread(this);
+        t.start();
+    }
+    
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                // Ngủ 1s
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String s = this.getTime();
+            this.lblDongHo.setText( s );
+            System.out.println(s);
+        }
+    }
+    
+    private String getTime()
+    {
+        Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
+        int second = c.get(Calendar.SECOND);
+        
+        return hour + ":" + minute + ":" + second;
     }
     
     private void loadTable()
@@ -54,6 +85,7 @@ public class QLProductFrame extends javax.swing.JFrame {
         btnClear = new javax.swing.JButton();
         btnDoc = new javax.swing.JButton();
         btnGhi = new javax.swing.JButton();
+        lblDongHo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProduct = new javax.swing.JTable();
@@ -108,6 +140,8 @@ public class QLProductFrame extends javax.swing.JFrame {
             }
         });
 
+        lblDongHo.setText("00:00:00");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -131,12 +165,15 @@ public class QLProductFrame extends javax.swing.JFrame {
                         .addGap(30, 30, 30)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnDoc)
                         .addGap(18, 18, 18)
-                        .addComponent(btnGhi)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnGhi)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblDongHo)
+                        .addGap(62, 62, 62))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,7 +193,8 @@ public class QLProductFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDoc)
-                    .addComponent(btnGhi))
+                    .addComponent(btnGhi)
+                    .addComponent(lblDongHo))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
@@ -397,6 +435,7 @@ public class QLProductFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblDongHo;
     private javax.swing.JTable tblProduct;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPrice;
